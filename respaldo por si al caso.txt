@@ -1,0 +1,26 @@
+respaldo de gestion
+def search_data(self):
+        con = pymysql.connect(
+            host="localhost",user="root",password="",database="gestiones")
+        cur = con.cursor()
+        cur.execute("select * from curso where " +str(self.search_by.get())+" LIKE '%"+str(self.search_txt.get())+ "%'")
+
+        rows = cur.fetchall()
+        if len(rows) !=0:
+            self.condominios_table.delete(*self.condominios_table.get_children())
+            for row in rows:
+                self.condominios_table.insert('', END, values=row)
+                con.commit()
+                con.close()
+
+def get_cursor(self, ev):
+        cursor_row = self.condominios_table.focus()
+        contents = self.condominios_table.item(cursor_row)
+        row = contents['values']
+        self.condominios_no.set(row[0]),
+        self.residentes_no.set(row[1]),
+        self.valor_no.set(row[2]),
+        self.deuda_no.set(row[3]),
+        self.infraccion_no.set(row[4]),
+        self.desalojo_no.set(row[5]),
+        self.motivo_no.set(row[6]),
